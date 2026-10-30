@@ -22,8 +22,5 @@
 *.vrb
 *.xdv
 
-# LaTeX build output
-*.pdf
-
 # macOS
 .DS_Store
