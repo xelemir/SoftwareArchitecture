@@ -1,0 +1,112 @@
+% PIBA -- Software Architecture Lab, WS 2026/27, University of Stuttgart
+%
+% Self-contained: compile with pdflatex (no additional files needed).
+% Rules: the whole PIBA must fit on ONE page. Do not change font size or margins.
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{itemsep=0.1em, topsep=0.2em}
+
+% Placeholder marker; leave the definition, but remove all uses before submitting.
+\newcommand{\todo}[1]{\textcolor{gray}{[#1]}}
+
+% Part heading
+\newcommand{\pibapart}[1]{\vspace{0.4em}{\large\textbf{#1}}\par}
+
+% ---------------------------------------------------------------------------
+% Project information
+% ---------------------------------------------------------------------------
+\newcommand{\projecttitle}{DiagnoTrace: A Holistic, Explainable Patient View}
+\newcommand{\teamname}{Team Berlin}
+\newcommand{\teammembers}{Jan, Paul, Pascal, Jenny, Georg, George}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\textbf{\projecttitle}}\\[0.3em]
+  \emph{One longitudinal view of each patient, across doctors and time, where the
+  AI never has the last word.}\\[0.3em]
+  {\large PIBA -- Software Architecture Lab, WS 2026/27}\\[0.3em]
+  \teamname\ \textbullet\ \teammembers
+\end{center}
+
+% ---------------------------------------------------------------------------
+\pibapart{Problem}
+Physicians assess a patient mainly from the examination during the visit, what the
+patient reports, and their own practice's past records. Live data between visits
+(e.g.\ from wearables) is missing, precise findings from other doctors rarely
+arrive, and Germany's electronic patient record (ePA) mostly holds documents. Many
+decision-support tools are rule sets or black boxes that rarely explain warnings,
+ignore free text and need core changes per source. Slow trends can be missed,
+delaying diagnosis.
+
+% ---------------------------------------------------------------------------
+\pibapart{Idea}
+DiagnoTrace merges everything known about a patient into one timeline and checks it
+continuously. An event-driven plug-in design lets each new fact trigger independent
+checks, and new sources or checks need no core change (\textbf{extensibility}). All
+data is stored in fixed types (e.g.\ lab value, medication, hospital stay) that
+record its origin, so every output traces back to its source (\textbf{explainability}).
+\begin{itemize}
+  \item \textbf{Data intake} reads mock ePA documents, a wearable feed and uploaded
+  blood reports. An LLM turns free text into the same fixed types.
+  \item \textbf{Checks} are plug-ins: simple rules and basic ML risk models.
+  \item \textbf{AI chat} summarises the patient, suggests diagnoses and answers the
+  doctor's questions, citing only stored facts and open-licensed WHO guidelines. It
+  cannot raise or suppress alerts.
+  \item \textbf{Web app} shows the timeline, alerts and chat; the doctor decides.
+\end{itemize}
+\textbf{Novel:} live data and free-text records from all doctors in one view the
+doctor can question, with rules and models raising alerts and the AI explaining them.
+\textbf{Trade-offs:} fixed types vs.\ unforeseen data; LLM extraction vs.\ fixed
+parsers; event bus vs.\ direct calls. \textbf{Out of scope:} real patient data
+(special-category data under GDPR), real ePA integration, clinical validity.
+
+% ---------------------------------------------------------------------------
+\pibapart{Benefits}
+\begin{itemize}
+  \item \textbf{Holistic view} -- addresses single-visit snapshots; shown by one
+  timeline merging three sources.
+  \item \textbf{Traceable answers} -- addresses black-box advice; target ${\geq}95\%$
+  of AI statements correctly cited.
+  \item \textbf{Reliable extraction} -- addresses unused free text; target
+  ${\geq}90\%$ precision and recall.
+  \item \textbf{Safe AI use} -- addresses wrong AI output; target 0 alerts raised or
+  suppressed by the chat.
+  \item \textbf{Easy extension} -- addresses costly integration; target 0 core files
+  changed per plug-in.
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\pibapart{Action}
+\begin{enumerate}
+  \item Specify requirements, quality scenarios and fact types; document the architecture.
+  \item Build the core: event bus, fact store with audit log, plug-in registry.
+  \item \textbf{Minimum deliverable:} ePA extraction, wearables, rule checks, alerts,
+  timeline.
+  \item Extend: blood-report upload, ML models, AI chat about the patient.
+  \item Evaluate the quality scenarios, prepare the presentation; two weeks buffer.
+\end{enumerate}
+Python, Flask, Pydantic, PostgreSQL, OpenRouter, Docker Compose; synthetic data only.
+\textbf{Team} (one lead each, set at kickoff): core; data intake; extraction;
+checks; AI chat; web app.
+
+% ---------------------------------------------------------------------------
+\vfill
+{\small\textbf{AI usage statement.} Claude Sonnet 5.5 (claude.ai): brainstorming,
+review. Claude Opus 5.5 (Claude Code): drafting, fact-checking, typesetting. The
+team reviewed and adapted all content.}
+
+\end{document}
