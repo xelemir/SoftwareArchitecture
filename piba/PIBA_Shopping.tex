@@ -1,0 +1,93 @@
+% PIBA Template -- Software Architecture Lab, WS 2026/27, University of Stuttgart
+%
+% Self-contained: compile with pdflatex (no additional files needed).
+% Rules: the whole PIBA must fit on ONE page. Do not change font size or margins.
+% Replace all text in \todo{...} and remove the hints before submitting.
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{itemsep=0.1em, topsep=0.2em}
+
+% Placeholder marker; leave the definition, but remove all uses before submitting.
+\newcommand{\todo}[1]{\textcolor{gray}{[#1]}}
+
+% Part heading
+\newcommand{\pibapart}[1]{\vspace{0.4em}{\large\textbf{#1}}\par}
+
+% ---------------------------------------------------------------------------
+% Project information
+% ---------------------------------------------------------------------------
+\newcommand{\projecttitle}{Shoppinglist Generator with Health Advice}
+\newcommand{\teamname}{Team Berlin}
+\newcommand{\teammembers}{Jan, Paul, Pascal, Jenny, Georg, George}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\textbf{\projecttitle}}\\[0.4em]
+  {\large PIBA -- Software Architecture Lab, WS 2026/27}\\[0.3em]
+  \teamname\ \textbullet\ \teammembers
+\end{center}
+
+% ---------------------------------------------------------------------------
+\pibapart{Problem}
+Every human-being has to go grocery shopping which also requires a large proportion of the person's income.
+Money can be saved by creating a shopping list in the first place to avoid impulse decisions in the store.
+However, a cheap grocery shopping trip may result in lower quality food and can impair the person's health.
+The decision between healthy food and a cheap purchase can be difficult.
+Especially for people with lower income which implies low quality food most of the time.
+
+% ---------------------------------------------------------------------------
+\pibapart{Idea}
+We want to create an App in which the user can create certain dishes with their ingredients and generate a shopping list based on the user's selection.
+The ingredients required for a certain dish contain the price, but also certain information about the "healthiness" of the product (E.g. "NutriScore", kCal, Data from the "Nutritional information" table (Nährwerttabelle)).
+The health data is then analyzed to provide user feedback about the planned shopping trip as well as the expected price.
+
+\begin{itemize}
+  \item \textbf{Recipe Storage} holds all the users dishes which are either created manually or pulled from common public APIs for cooking recipes.
+  \item \textbf{Health Evaluation} takes all the information from the single ingredients currently selected for the shopping list and analyzes them.
+  The is done with deterministic algorithms and certain thresholds to decide what degree of healthiness the shopping list or a particular dish has.
+\end{itemize}
+% What is your proposed solution, and what does its architecture look like?
+% The architecture is the heart of your idea.
+\todo{Main components and their interaction. Architectural style or patterns
+and why. Driving quality attributes. Out of scope: \ldots}
+
+% ---------------------------------------------------------------------------
+\pibapart{Benefits}
+% What improves if the idea works, and how would you show it?
+% Link each benefit back to the problem.
+\begin{itemize}
+  \item \todo{Benefit 1 -- addresses \ldots; demonstrated by \ldots}
+  \item \todo{Benefit 2 -- addresses \ldots; demonstrated by \ldots}
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\pibapart{Action}
+% What will you build and evaluate, in which steps, within 3 months?
+% Mark the minimum deliverable and keep some buffer.
+\begin{enumerate}
+  \item ...
+  \item ...
+\end{enumerate}
+\todo{Required technologies, data, and infrastructure; team split.}
+
+% ---------------------------------------------------------------------------
+\vfill
+{\small\textbf{AI usage statement.} \todo{Which AI tools and models did you
+use, and for what (e.g.\ brainstorming, rephrasing)? Write ``None'' if you
+did not use AI.}}
+
+\end{document}
