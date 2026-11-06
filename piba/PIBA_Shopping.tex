@@ -43,21 +43,35 @@
 
 % ---------------------------------------------------------------------------
 \pibapart{Problem}
-Every human-being has to go grocery shopping which also requires a large proportion of the person's income.
-Money can be saved by creating a shopping list in the first place to avoid impulse decisions in the store.
-However, a cheap grocery shopping trip may result in lower quality food and can impair the person's health.
+Every human-being has to go grocery shopping but selecting various, changing meals is tedious and people tend to choose the lazy option. 
+Traditional approaches do not factor in personal meal preferences and often result in impulse decisions in the store.
+However, a \todo{"yolo"} shopping trip may result in lower quality food and can impair the person's health.
 The decision between healthy food and a cheap purchase can be difficult.
-Especially for people with lower income which implies low quality food most of the time.
+%Especially for people with lower income which implies low quality food most of the time.
 
 % ---------------------------------------------------------------------------
 \pibapart{Idea}
+%Money can be saved by creating a shopping list in the first place
+%People might also wish to obey additional constraints in their food selection such as already available ingredients or preferences.
 We want to create an app in which the user can create certain dishes with their ingredients and generate a shopping list based on the user's selection.
 The ingredients required for a certain dish contain the price, but also certain information about the "healthiness" of the product (E.g. "NutriScore", kCal, Data from the "Nutritional information" table (Nährwerttabelle)).
 The health data is then analyzed to provide user feedback about the planned shopping trip as well as the expected price.
 
+- Factoren: Preis, Gesundheit, Dauer, Filter (Vegan, Allergie...), 
+-
+- Gameification
+- Big Datenbank (chefkoch), manuell vom user? Mock Data
+- Grob: Akinator 
+- Fein: Swap Left/Right Tinder 
+- Gericht auswahl nach kCal angabe, gewollte eiweiß, ...
+- Output: Shopping list für X Gerichte
+- 
+
 \begin{itemize}
-  \item \textbf{Client Only}: Recipe Storage, Selection, Shopping List and Calculations all happening locally for privacy.
+  %\item \textbf{Client Only}: Recipe Storage, Selection, Shopping List and Calculations all happening locally for privacy.
   \item \textbf{Recipe Storage} holds all the users dishes with their ingredients which are either created manually or pulled from common public APIs for cooking recipes.
+  
+
   \item \textbf{Health Evaluation} takes all the information from the single ingredients currently selected for the shopping list and analyzes them.
   The is done with deterministic algorithms and certain thresholds to decide what degree of healthiness the shopping list or a particular dish has.
   (Possible AI Integration)
@@ -66,6 +80,12 @@ The health data is then analyzed to provide user feedback about the planned shop
 \end{itemize}
 % What is your proposed solution, and what does its architecture look like?
 % The architecture is the heart of your idea.
+
+- User: Preferenzen, 
+- WebApp
+- 
+- 
+
 \todo{Main components and their interaction. Architectural style or patterns
 and why. Driving quality attributes. Out of scope: \ldots}
 
@@ -74,8 +94,9 @@ and why. Driving quality attributes. Out of scope: \ldots}
 % What improves if the idea works, and how would you show it?
 % Link each benefit back to the problem.
 \begin{itemize}
-  \item \todo{Benefit 1 -- addresses \ldots; demonstrated by \ldots}
-  \item \todo{Benefit 2 -- addresses \ldots; demonstrated by \ldots}
+  \item Centralized place for dishes addresses time needed to create shopping list; demonstrated by time taken from selection to finished shopping list
+  \item Nutritional information and analyses addresses unhealthy users eating habits; demonstrated by
+  % Optimierung Zeit, Geld, Gesundheit, Zufriedenheit steigt, 
 \end{itemize}
 
 % ---------------------------------------------------------------------------
@@ -85,8 +106,8 @@ and why. Driving quality attributes. Out of scope: \ldots}
 \begin{enumerate}
   \item Specify requirements and develop full architecture with certain user stories.
   \item Build core features: Recipe Storage, User Interface, Basic Recipe Management.
-  \item \textbf{Minimum deliverable:} Full client side recipe support for selection and generating shopping list with ingredients and nutritional information.
-  \item Extend: Health Analysis, Server Side Database, User recommendations
+  \item \textbf{Minimum deliverable:} Full web application, recipe support for selection and generating shopping list with ingredients and nutritional information.
+  \item Extend: Health Analysis, Server Side Database, AI for User recommendations
 \end{enumerate}
 \todo{Required technologies, data, and infrastructure; team split.}
 
