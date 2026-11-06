@@ -29,7 +29,7 @@
 % ---------------------------------------------------------------------------
 % Project information
 % ---------------------------------------------------------------------------
-\newcommand{\projecttitle}{Shoppinglist Generator with Health Advice}
+\newcommand{\projecttitle}{MealSwipe: Health-Aware Meal Planning}
 \newcommand{\teamname}{Team Berlin}
 \newcommand{\teammembers}{Jan, Paul, Pascal, Jenny, Georg, George}
 
@@ -43,60 +43,38 @@
 
 % ---------------------------------------------------------------------------
 \pibapart{Problem}
-Every human-being has to go grocery shopping but selecting various, changing meals is tedious and people tend to choose the lazy option. 
-Traditional approaches do not factor in personal meal preferences and often result in impulse decisions in the store.
-However, a \todo{"yolo"} shopping trip may result in lower quality food and can impair the person's health.
-The decision between healthy food and a cheap purchase can be difficult.
-%Especially for people with lower income which implies low quality food most of the time.
+% What is wrong, missing, or hard today, and for whom?
+Deciding what to cook every week is tedious, so people repeat the same few dishes or buy on impulse.
+Recipe platforms only help if you already know what you want and ignore budget, time, or allergies.
+Health ratings like the Nutri-Score are one-size-fits-all: a 900\,kcal high-protein meal suits someone building muscle but not someone trying to lose weight.
 
 % ---------------------------------------------------------------------------
 \pibapart{Idea}
-%Money can be saved by creating a shopping list in the first place
-%People might also wish to obey additional constraints in their food selection such as already available ingredients or preferences.
-We want to create an app in which the user can create certain dishes with their ingredients and generate a shopping list based on the user's selection.
-The ingredients required for a certain dish contain the price, but also certain information about the "healthiness" of the product (E.g. "NutriScore", kCal, Data from the "Nutritional information" table (Nährwerttabelle)).
-The health data is then analyzed to provide user feedback about the planned shopping trip as well as the expected price.
-
-- Factoren: Preis, Gesundheit, Dauer, Filter (Vegan, Allergie...), 
--
-- Gameification
-- Big Datenbank (chefkoch), manuell vom user? Mock Data
-- Grob: Akinator 
-- Fein: Swap Left/Right Tinder 
-- Gericht auswahl nach kCal angabe, gewollte eiweiß, ...
-- Output: Shopping list für X Gerichte
-- 
-
-\begin{itemize}
-  %\item \textbf{Client Only}: Recipe Storage, Selection, Shopping List and Calculations all happening locally for privacy.
-  \item \textbf{Recipe Storage} holds all the users dishes with their ingredients which are either created manually or pulled from common public APIs for cooking recipes.
-  
-
-  \item \textbf{Health Evaluation} takes all the information from the single ingredients currently selected for the shopping list and analyzes them.
-  The is done with deterministic algorithms and certain thresholds to decide what degree of healthiness the shopping list or a particular dish has.
-  (Possible AI Integration)
-  \item \textbf{Possible Server Integration}: Global database with nutritional information and price for ingredients the clients can pull from.
-  \item \textbf{Recommendations}: The app makes dish recommendations for the user based on previous shopping list generations in order to be varied and healthy.
-\end{itemize}
 % What is your proposed solution, and what does its architecture look like?
 % The architecture is the heart of your idea.
-
-- User: Preferenzen, 
-- WebApp
-- 
-- 
-
-\todo{Main components and their interaction. Architectural style or patterns
-and why. Driving quality attributes. Out of scope: \ldots}
+A web app that finds meals by swiping: a few coarse questions (``Noodles today?''), then dish cards swiped left or right.
+From the liked dishes it builds a plan of $X$ meals, weighing price, cooking time, and fit with personal goals (e.g.\ high protein), plus a priced shopping list.
+\begin{itemize}
+  \item \textbf{Web Client} (Flask/Jinja, plain JS for swiping): swipe UI, profile, plan, list.
+  \item \textbf{Preference Engine}: holds the swipe session and picks the next question or card.
+  \item \textbf{Recipe Catalog}: recipes, nutrition, and prices, filled via import adapters (mock data first).
+  \item \textbf{User Profile}: goals, hard filters (vegan, allergies), and history for variety.
+  \item \textbf{Health Evaluator}: rates dishes \emph{relative to the user's goals}; a rule-based and an AI (LLM) implementation with personalized explanations share one interface.
+  \item \textbf{Meal Planner}: ranks candidates, selects $X$ meals, aggregates the shopping list.
+\end{itemize}
+\textbf{Style:} modular monolith with ports and adapters (replaceable data sources and AI provider).
+\textbf{Quality attributes:} \emph{modifiability} (swap evaluators or sources), \emph{availability} (rule-based fallback if the AI fails), \emph{privacy} (only anonymized nutrient data reaches the LLM), \emph{responsiveness} (next card $<$\,200\,ms).
+\textbf{Out of scope:} live prices, ordering, medical diets, native apps.
 
 % ---------------------------------------------------------------------------
 \pibapart{Benefits}
 % What improves if the idea works, and how would you show it?
 % Link each benefit back to the problem.
 \begin{itemize}
-  \item Centralized place for dishes addresses time needed to create shopping list; demonstrated by time taken from selection to finished shopping list
-  \item Nutritional information and analyses addresses unhealthy users eating habits; demonstrated by
-  % Optimierung Zeit, Geld, Gesundheit, Zufriedenheit steigt, 
+  \item \textbf{Less time} -- addresses tedious meal selection; shown by the time from start to finished shopping list vs.\ manual planning with a recipe site (user study).
+  \item \textbf{Less money} -- addresses impulse buys; shown by comparing the planned list's cost with participants' usual weekly grocery spending.
+  \item \textbf{Healthier, goal-fitting diet} -- addresses one-size-fits-all ratings; shown by one dish rated differently per goal profile and plans meeting calorie/protein targets within 10\,\%.
+  \item \textbf{More variety and satisfaction} -- addresses repetitive meals; shown by distinct dishes per user across sessions and participants' ratings of their generated plans.
 \end{itemize}
 
 % ---------------------------------------------------------------------------
@@ -104,17 +82,17 @@ and why. Driving quality attributes. Out of scope: \ldots}
 % What will you build and evaluate, in which steps, within 3 months?
 % Mark the minimum deliverable and keep some buffer.
 \begin{enumerate}
-  \item Specify requirements and develop full architecture with certain user stories.
-  \item Build core features: Recipe Storage, User Interface, Basic Recipe Management.
-  \item \textbf{Minimum deliverable:} Full web application, recipe support for selection and generating shopping list with ingredients and nutritional information.
-  \item Extend: Health Analysis, Server Side Database, AI for User recommendations
+  \item \emph{Wk 1--3, Design:} user stories, quality scenarios, interfaces, ADRs; mock data (100 recipes).
+  \item \emph{Wk 4--7, Core:} catalog, profile, swipe UI, planner, rule-based evaluator.\\
+  \textbf{Minimum deliverable:} swipe to $X$ meals with priced shopping list and health rating.
+  \item \emph{Wk 8--10, Extend:} LLM evaluator, coarse questions, recommendations, gamification.
+  \item \emph{Wk 11--12, Evaluate:} user study, quality scenario checks; buffer.
 \end{enumerate}
-\todo{Required technologies, data, and infrastructure; team split.}
+\textbf{Tech:} Python/Flask, PostgreSQL, Docker, LLM API.
+\textbf{Team:} 2 frontend, 2 backend, 2 health/AI.
 
 % ---------------------------------------------------------------------------
 \vfill
-{\small\textbf{AI usage statement.} None \todo{Which AI tools and models did you
-use, and for what (e.g.\ brainstorming, rephrasing)? Write ``None'' if you
-did not use AI.}}
+{\small\textbf{AI usage statement.} Claude (Anthropic) was used to restructure and rephrase our draft.}
 
 \end{document}
