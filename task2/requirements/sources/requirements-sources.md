@@ -12,4 +12,4 @@
 | ISO 9241 | Series of standards addressing ergonomics and human-system interaction | Usability, interaction design and user experience
 | EU Regulation 1169/2011 | European regulation on food information, including allergens and nutritional declarations | Allergen identification and nutritional information | 
 | USDA FoodData Central | Database containing nutritional information for foods and ingredients | Recipe catalog, nutritional calculations and potential data import adapter |
-| Open Food Facts | Database containing food product, ingredient and nutritional information | 
+| Open Food Facts | Database containing food product, ingredient and nutritional information | Ingredient information, allergen identification, nutritional values and potential data source |
